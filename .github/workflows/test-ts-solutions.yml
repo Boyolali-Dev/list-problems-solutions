@@ -48,6 +48,13 @@ jobs:
           for file in $CHANGED_TS; do
             if [[ "$file" == solutions/*/*.ts ]]; then
               sol="$file"
+
+              # ✅ Skip if file was deleted
+              if [ ! -f "$sol" ]; then
+                echo "🗑️  Skipping deleted file $sol"
+                continue
+              fi
+
               daydir=$(dirname "$sol")
               day=$(basename "$daydir")
               day_cleaned=$(echo "$day" | tr -d '-')  # remove dashes like day-01 → day01
