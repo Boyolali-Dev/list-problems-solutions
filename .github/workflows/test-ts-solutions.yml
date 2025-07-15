@@ -2,6 +2,8 @@ name: Test TypeScript Solutions
 
 on:
   push:
+    branches:
+      - main
     paths:
       - "solutions/**/*.ts"
       - "runners/**/*.ts"
