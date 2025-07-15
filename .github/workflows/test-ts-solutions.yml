@@ -31,7 +31,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -D typescript ts-node @types/node
+          npm install -D ts-node@10.9.1 typescript@5.3 @types/node
 
       - name: Make runner executable
         run: chmod +x runners/run_tests_ts.ts
@@ -54,7 +54,7 @@ jobs:
 
               if [ -f "$testfile" ]; then
                 echo "🧪 Testing $sol with $testfile"
-                npx ts-node --loader ts-node/esm runners/run_tests_ts.ts "$testfile" "$sol"
+                node --loader ts-node/esm runners/run_tests_ts.ts "$testfile" "$sol"
               else
                 echo "⚠️ Skipping $sol: No matching test file at $testfile"
               fi
