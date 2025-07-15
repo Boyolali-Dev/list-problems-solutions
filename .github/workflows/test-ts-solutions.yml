@@ -1,0 +1,60 @@
+name: Test TypeScript Solutions
+
+on:
+  push:
+    paths:
+      - "solutions/**/*.ts"
+      - "runners/**/*.ts"
+      - "tests/**/*.json"
+  pull_request:
+    paths:
+      - "solutions/**/*.ts"
+      - "runners/**/*.ts"
+      - "tests/**/*.json"
+  workflow_dispatch:
+
+jobs:
+  test-ts-solutions:
+    name: Run TS Test Runner
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: |
+          npm install -D typescript ts-node @types/node
+
+      - name: Make runner executable
+        run: chmod +x runners/run_tests_ts.ts
+
+      - name: Run Tests for Changed TypeScript Solutions
+        run: |
+          CHANGED_TS=$(git diff --name-only origin/${{ github.event.before }} | grep '\.ts$' || true)
+
+          if [ -z "$CHANGED_TS" ]; then
+            echo "No TypeScript files changed. Skipping test run."
+            exit 0
+          fi
+
+          for file in $CHANGED_TS; do
+            if [[ "$file" == solutions/*/*.ts ]]; then
+              sol="$file"
+              daydir=$(dirname "$sol")
+              day=$(basename "$daydir")
+              testfile="tests/$day.json"
+
+              if [ -f "$testfile" ]; then
+                echo "✅ Testing $sol with $testfile"
+                ts-node --esm runners/run_tests_ts.ts "$testfile" "$sol"
+              else
+                echo "⚠️ Skipping $sol: No matching test file at $testfile"
+              fi
+            fi
+          done
