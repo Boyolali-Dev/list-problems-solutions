@@ -27,6 +27,19 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Check for changed TypeScript files
+        id: changed
+        run: |
+          git fetch origin ${{ github.base_ref || 'main' }}
+          CHANGED_TS=$(git diff --name-only origin/${{ github.base_ref || 'main' }}...HEAD | grep '\.ts$' || true)
+          echo "Changed TS files:"
+          echo "$CHANGED_TS"
+          if [ -n "$CHANGED_TS" ]; then
+            echo "has_ts_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_ts_changes=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
