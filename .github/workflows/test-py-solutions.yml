@@ -18,6 +18,9 @@ jobs:
     name: Run Python Test Runner
     runs-on: ubuntu-latest
 
+    # ✅ Only run if there are .py changes or if manually triggered
+    if: github.event_name == 'workflow_dispatch' || steps.changed.outputs.has_py_changes == 'true'
+
     steps:
       - name: Checkout full history
         uses: actions/checkout@v3
@@ -27,7 +30,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Make runner executable
         run: chmod +x runners/run_tests_py.py
@@ -63,4 +66,4 @@ jobs:
                 echo "⚠️ Skipping $sol: No matching test file at $testfile"
               fi
             fi
-          done 
+          done

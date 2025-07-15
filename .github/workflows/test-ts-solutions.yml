@@ -18,6 +18,9 @@ jobs:
     name: Run TS Test Runner
     runs-on: ubuntu-latest
 
+    # ✅ Only run if there are .ts changes or if manually triggered
+    if: github.event_name == 'workflow_dispatch' || steps.changed.outputs.has_ts_changes == 'true'
+
     steps:
       - name: Checkout full history
         uses: actions/checkout@v3
