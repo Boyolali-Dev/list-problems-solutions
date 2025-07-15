@@ -1,12 +1,11 @@
 {
     "compilerOptions": {
-      "module": "ESNext",
       "target": "ES2020",
-      "moduleResolution": "Node",
+      "module": "CommonJS",
       "esModuleInterop": true,
       "resolveJsonModule": true,
       "types": ["node"],
-      "moduleDetection": "force" // (optional but helpful)
+      "strict": true
     }
   }
   

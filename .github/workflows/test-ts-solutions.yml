@@ -22,7 +22,7 @@ jobs:
       - name: Checkout full history
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # ✅ Important: so git diff works
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -31,7 +31,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -D ts-node@10.9.1 typescript@5.3 @types/node
+          npm install -D ts-node typescript @types/node
 
       - name: Make runner executable
         run: chmod +x runners/run_tests_ts.ts
@@ -50,11 +50,12 @@ jobs:
               sol="$file"
               daydir=$(dirname "$sol")
               day=$(basename "$daydir")
-              testfile="tests/$day.json"
+              day_cleaned=$(echo "$day" | tr -d '-')  # remove dashes like day-01 → day01
+              testfile="tests/$day_cleaned.json"
 
               if [ -f "$testfile" ]; then
                 echo "🧪 Testing $sol with $testfile"
-                node --loader ts-node/esm runners/run_tests_ts.ts "$testfile" "$sol"
+                npx ts-node runners/run_tests_ts.ts "$testfile" "$sol"
               else
                 echo "⚠️ Skipping $sol: No matching test file at $testfile"
               fi
