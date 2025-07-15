@@ -54,7 +54,7 @@ jobs:
 
               if [ -f "$testfile" ]; then
                 echo "🧪 Testing $sol with $testfile"
-                ts-node --esm runners/run_tests_ts.ts "$testfile" "$sol"
+                npx ts-node --esm runners/run_tests_ts.ts "$testfile" "$sol"
               else
                 echo "⚠️ Skipping $sol: No matching test file at $testfile"
               fi
