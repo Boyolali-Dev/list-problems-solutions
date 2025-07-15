@@ -1,4 +1,4 @@
-name: Test TypeScript Solutions
+name: Test Solutions
 
 on:
   push:
