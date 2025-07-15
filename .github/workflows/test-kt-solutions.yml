@@ -1,0 +1,74 @@
+name: Test Kotlin Solutions
+
+on:
+  push:
+    paths:
+      - "solutions/**/*.kt"
+      - "runners/**/*.kt"
+      - "tests/**/*.json"
+  pull_request:
+    paths:
+      - "solutions/**/*.kt"
+      - "runners/**/*.kt"
+      - "tests/**/*.json"
+  workflow_dispatch:
+
+jobs:
+  test-kt-solutions:
+    name: Run Kotlin Test Runner
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Setup Kotlin
+        run: |
+          curl -s "https://get.sdkman.io" | bash
+          source "$HOME/.sdkman/bin/sdkman-init.sh"
+          sdk install kotlin 1.9.0
+          echo "$HOME/.sdkman/candidates/kotlin/current/bin" >> $GITHUB_PATH
+
+      - name: Make runner executable
+        run: chmod +x runners/run_tests_kt.sh
+
+      - name: Run Tests for Changed Kotlin Files
+        run: |
+          CHANGED_KT=$(git diff --name-only HEAD~1 | grep '\.kt$' || true)
+
+          if [ -z "$CHANGED_KT" ]; then
+            echo "📭 No changed Kotlin files. Skipping tests."
+            exit 0
+          fi
+
+          for file in $CHANGED_KT; do
+            if [[ "$file" == solutions/*/*.kt ]]; then
+              sol="$file"
+
+              # ✅ Skip if file was deleted
+              if [ ! -f "$sol" ]; then
+                echo "🗑️  Skipping deleted file $sol"
+                continue
+              fi
+
+              daydir=$(dirname "$sol")
+              day=$(basename "$daydir")
+              day_cleaned=$(echo "$day" | tr -d '-')  # remove dashes like day-01 → day01
+              testfile="tests/$day_cleaned.json"
+
+              if [ -f "$testfile" ]; then
+                echo "🧪 Testing $sol with $testfile"
+                ./runners/run_tests_kt.sh "$testfile" "$sol"
+              else
+                echo "⚠️ Skipping $sol: No matching test file at $testfile"
+              fi
+            fi
+          done 
