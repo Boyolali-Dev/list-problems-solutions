@@ -19,27 +19,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout full history
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # ✅ Important: so git diff works
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: |
           npm install -D typescript ts-node @types/node
 
       - name: Make runner executable
         run: chmod +x runners/run_tests_ts.ts
 
-      - name: Run Tests for Changed TypeScript Solutions
+      - name: Run Tests for Changed TypeScript Files
         run: |
-          CHANGED_TS=$(git diff --name-only origin/${{ github.event.before }} | grep '\.ts$' || true)
+          CHANGED_TS=$(git diff --name-only HEAD~1 | grep '\.ts$' || true)
 
           if [ -z "$CHANGED_TS" ]; then
-            echo "No TypeScript files changed. Skipping test run."
+            echo "📭 No changed TypeScript files. Skipping tests."
             exit 0
           fi
 
@@ -51,7 +53,7 @@ jobs:
               testfile="tests/$day.json"
 
               if [ -f "$testfile" ]; then
-                echo "✅ Testing $sol with $testfile"
+                echo "🧪 Testing $sol with $testfile"
                 ts-node --esm runners/run_tests_ts.ts "$testfile" "$sol"
               else
                 echo "⚠️ Skipping $sol: No matching test file at $testfile"
