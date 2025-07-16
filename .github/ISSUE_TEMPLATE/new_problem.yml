@@ -1,0 +1,33 @@
+name: ✨ New Problem Proposal
+description: Suggest a new problem to be added
+title: "[New Problem] <problem title>"
+labels: [enhancement]
+body:
+  - type: input
+    id: day-number
+    attributes:
+      label: Day Number
+      description: What day will this problem belong to?
+      placeholder: e.g., 07
+
+  - type: textarea
+    id: problem-description
+    attributes:
+      label: Problem Description
+      description: Write the full problem statement
+      placeholder: Describe the input, output, constraints, and examples
+
+  - type: textarea
+    id: sample-testcase
+    attributes:
+      label: Sample Test Case
+      description: Provide example input and expected output
+      placeholder: |
+        Input: ...
+        Output: ...
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional Notes
+      description: Any edge cases, hints, or target difficulty level?

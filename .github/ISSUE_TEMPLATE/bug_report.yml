@@ -1,0 +1,42 @@
+name: 🐞 Bug Report
+description: Report a bug in the solution/test runner
+title: "[Bug] <short description>"
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the bug and steps to reproduce it.
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+
+  - type: input
+    id: file-path
+    attributes:
+      label: File or Directory
+      description: Which file(s) or folder(s) does the bug affect?
+      placeholder: e.g., solutions/day01/day01indra.py
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: What did you expect to happen?
+
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      options:
+        - Python
+        - TypeScript
+        - PHP
+        - Swift
+        - Other
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context or screenshots
+      description: Any other information that helps.
