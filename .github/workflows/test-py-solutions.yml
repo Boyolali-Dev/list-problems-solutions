@@ -1,0 +1,94 @@
+name: Test Python Solutions
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "solutions/**/*.py"
+      - "runners/**/*.py"
+      - "tests/**/*.json"
+  pull_request:
+    paths:
+      - "solutions/**/*.py"
+      - "runners/**/*.py"
+      - "tests/**/*.json"
+  workflow_dispatch:
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      has_py_changes: ${{ steps.check-py.outputs.has_py_changes }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check for Python changes
+        id: check-py
+        run: |
+          git fetch origin ${{ github.base_ref || 'main' }}
+          CHANGED_PY=$(git diff --name-only origin/${{ github.base_ref || 'main' }}...HEAD | grep '\.py$' || true)
+          echo "Changed Python files:"
+          echo "$CHANGED_PY"
+          if [ -n "$CHANGED_PY" ]; then
+            echo "has_py_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_py_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+  test-py-solutions:
+    name: Run Python Test Runner
+    needs: detect-changes
+    if: needs.detect-changes.outputs.has_py_changes == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Make runner executable
+        run: chmod +x runners/run_tests_py.py
+
+      - name: Run Tests for Changed Python Files
+        run: |
+          git fetch origin ${{ github.base_ref || 'main' }}
+          CHANGED_PY=$(git diff --name-only origin/${{ github.base_ref || 'main' }}...HEAD | grep '\.py$' || true)
+
+          if [ -z "$CHANGED_PY" ]; then
+            echo "📭 No changed Python files. Skipping tests."
+            exit 0
+          fi
+
+          for file in $CHANGED_PY; do
+            if [[ "$file" == solutions/*/*.py ]]; then
+              sol="$file"
+
+              if [ ! -f "$sol" ]; then
+                echo "🗑️  Skipping deleted file $sol"
+                continue
+              fi
+
+              daydir=$(dirname "$sol")
+              day=$(basename "$daydir")
+              day_cleaned=$(echo "$day" | tr -d '-')
+              testfile="tests/$day_cleaned.json"
+
+              if [ -f "$testfile" ]; then
+                echo "🧪 Testing $sol with $testfile"
+                python runners/run_tests_py.py "$testfile" "$sol"
+              else
+                echo "⚠️ Skipping $sol: No matching test file at $testfile"
+              fi
+            fi
+          done

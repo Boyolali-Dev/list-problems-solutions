@@ -1,0 +1,98 @@
+name: Test TypeScript Solutions
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "solutions/**/*.ts"
+      - "runners/**/*.ts"
+      - "tests/**/*.json"
+  pull_request:
+    paths:
+      - "solutions/**/*.ts"
+      - "runners/**/*.ts"
+      - "tests/**/*.json"
+  workflow_dispatch:
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      has_ts_changes: ${{ steps.check-ts.outputs.has_ts_changes }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check for TypeScript changes
+        id: check-ts
+        run: |
+          git fetch origin ${{ github.base_ref || 'main' }}
+          CHANGED_TS=$(git diff --name-only origin/${{ github.base_ref || 'main' }}...HEAD | grep '\.ts$' || true)
+          echo "Changed TS files:"
+          echo "$CHANGED_TS"
+          if [ -n "$CHANGED_TS" ]; then
+            echo "has_ts_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_ts_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+  test-ts-solutions:
+    name: Run TS Test Runner
+    needs: detect-changes
+    if: needs.detect-changes.outputs.has_ts_changes == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: |
+          npm install -D ts-node typescript @types/node
+
+      - name: Make runner executable
+        run: chmod +x runners/run_tests_ts.ts
+
+      - name: Run Tests for Changed TypeScript Files
+        run: |
+          git fetch origin ${{ github.base_ref || 'main' }}
+          CHANGED_TS=$(git diff --name-only origin/${{ github.base_ref || 'main' }}...HEAD | grep '\.ts$' || true)
+
+          if [ -z "$CHANGED_TS" ]; then
+            echo "📭 No changed TypeScript files. Skipping tests."
+            exit 0
+          fi
+
+          for file in $CHANGED_TS; do
+            if [[ "$file" == solutions/*/*.ts ]]; then
+              sol="$file"
+
+              if [ ! -f "$sol" ]; then
+                echo "🗑️  Skipping deleted file $sol"
+                continue
+              fi
+
+              daydir=$(dirname "$sol")
+              day=$(basename "$daydir")
+              day_cleaned=$(echo "$day" | tr -d '-')
+              testfile="tests/$day_cleaned.json"
+
+              if [ -f "$testfile" ]; then
+                echo "🧪 Testing $sol with $testfile"
+                npx ts-node runners/run_tests_ts.ts "$testfile" "$sol"
+              else
+                echo "⚠️ Skipping $sol: No matching test file at $testfile"
+              fi
+            fi
+          done
