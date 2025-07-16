@@ -1,7 +1,9 @@
-name: Test Solutions
+name: Test TypeScript Solutions
 
 on:
   push:
+    branches:
+      - main
     paths:
       - "solutions/**/*.ts"
       - "runners/**/*.ts"
@@ -14,8 +16,34 @@ on:
   workflow_dispatch:
 
 jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      has_ts_changes: ${{ steps.check-ts.outputs.has_ts_changes }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check for TypeScript changes
+        id: check-ts
+        run: |
+          git fetch origin ${{ github.base_ref || 'main' }}
+          CHANGED_TS=$(git diff --name-only origin/${{ github.base_ref || 'main' }}...HEAD | grep '\.ts$' || true)
+          echo "Changed TS files:"
+          echo "$CHANGED_TS"
+          if [ -n "$CHANGED_TS" ]; then
+            echo "has_ts_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_ts_changes=false" >> $GITHUB_OUTPUT
+          fi
+
   test-ts-solutions:
     name: Run TS Test Runner
+    needs: detect-changes
+    if: needs.detect-changes.outputs.has_ts_changes == 'true' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
     steps:
@@ -38,7 +66,8 @@ jobs:
 
       - name: Run Tests for Changed TypeScript Files
         run: |
-          CHANGED_TS=$(git diff --name-only HEAD~1 | grep '\.ts$' || true)
+          git fetch origin ${{ github.base_ref || 'main' }}
+          CHANGED_TS=$(git diff --name-only origin/${{ github.base_ref || 'main' }}...HEAD | grep '\.ts$' || true)
 
           if [ -z "$CHANGED_TS" ]; then
             echo "📭 No changed TypeScript files. Skipping tests."
@@ -49,7 +78,6 @@ jobs:
             if [[ "$file" == solutions/*/*.ts ]]; then
               sol="$file"
 
-              # ✅ Skip if file was deleted
               if [ ! -f "$sol" ]; then
                 echo "🗑️  Skipping deleted file $sol"
                 continue
@@ -57,7 +85,7 @@ jobs:
 
               daydir=$(dirname "$sol")
               day=$(basename "$daydir")
-              day_cleaned=$(echo "$day" | tr -d '-')  # remove dashes like day-01 → day01
+              day_cleaned=$(echo "$day" | tr -d '-')
               testfile="tests/$day_cleaned.json"
 
               if [ -f "$testfile" ]; then

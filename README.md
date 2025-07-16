@@ -9,6 +9,7 @@ Week 1
 | --- | ------------ | ------------------------------------------------- | ----------------------------- |
 | 1 | 14 Juli 2025 | [Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) | [Jawaban](./solutions/day-01) |
 | 2 | 15 Juli 2025 | [Valid Anagram](https://leetcode.com/problems/valid-anagram/) | [Jawaban](./solutions/day-02) |
+| 3 | 16 Juli 2025 | [Two Sum](https://leetcode.com/problems/two-sum/) | [Jawaban](./solutions/day-03) |
 
 > 📌 _Catatan: Tulisannya bisa disesuaikan jika ada variasi bahasa (JS, TS, Python, dll). Struktur folder disarankan `solutions/day-XX/namasoal.ext`._
 
