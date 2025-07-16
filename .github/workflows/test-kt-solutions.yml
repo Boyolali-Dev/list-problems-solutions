@@ -2,6 +2,8 @@ name: Test Kotlin Solutions
 
 on:
   push:
+    branches:
+      - main
     paths:
       - "solutions/**/*.kt"
       - "runners/**/*.kt"
@@ -14,8 +16,34 @@ on:
   workflow_dispatch:
 
 jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      has_kt_changes: ${{ steps.check-kt.outputs.has_kt_changes }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check for Kotlin changes
+        id: check-kt
+        run: |
+          git fetch origin ${{ github.base_ref || 'main' }}
+          CHANGED_KT=$(git diff --name-only origin/${{ github.base_ref || 'main' }}...HEAD | grep '\.kt$' || true)
+          echo "Changed Kotlin files:"
+          echo "$CHANGED_KT"
+          if [ -n "$CHANGED_KT" ]; then
+            echo "has_kt_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_kt_changes=false" >> $GITHUB_OUTPUT
+          fi
+
   test-kt-solutions:
     name: Run Kotlin Test Runner
+    needs: detect-changes
+    if: needs.detect-changes.outputs.has_kt_changes == 'true' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
     steps:
@@ -42,7 +70,8 @@ jobs:
 
       - name: Run Tests for Changed Kotlin Files
         run: |
-          CHANGED_KT=$(git diff --name-only HEAD~1 | grep '\.kt$' || true)
+          git fetch origin ${{ github.base_ref || 'main' }}
+          CHANGED_KT=$(git diff --name-only origin/${{ github.base_ref || 'main' }}...HEAD | grep '\.kt$' || true)
 
           if [ -z "$CHANGED_KT" ]; then
             echo "📭 No changed Kotlin files. Skipping tests."
@@ -53,7 +82,6 @@ jobs:
             if [[ "$file" == solutions/*/*.kt ]]; then
               sol="$file"
 
-              # ✅ Skip if file was deleted
               if [ ! -f "$sol" ]; then
                 echo "🗑️  Skipping deleted file $sol"
                 continue
@@ -61,7 +89,7 @@ jobs:
 
               daydir=$(dirname "$sol")
               day=$(basename "$daydir")
-              day_cleaned=$(echo "$day" | tr -d '-')  # remove dashes like day-01 → day01
+              day_cleaned=$(echo "$day" | tr -d '-')
               testfile="tests/$day_cleaned.json"
 
               if [ -f "$testfile" ]; then
