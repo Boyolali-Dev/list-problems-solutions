@@ -12,6 +12,7 @@ Week 1
 | 3 | 16 Juli 2025 | [Two Sum](https://leetcode.com/problems/two-sum/) | [Jawaban](./solutions/day-03) |
 | 4 | 17 Juli 2025 | [Group Anagrams](https://leetcode.com/problems/group-anagrams/) | [Jawaban](./solutions/day-04) |
 | 5 | 18 Juli 2025 | [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | [Jawaban](./solutions/day-05) |
+| 6 | 19 Juli 2025 | [Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/) | [Jawaban](./solutions/day-06) |
 
 > 📌 _Catatan: Tulisannya bisa disesuaikan jika ada variasi bahasa (JS, TS, Python, dll). Struktur folder disarankan `solutions/day-XX/namasoal.ext`._
 
