@@ -1,0 +1,91 @@
+name: Test PHP Solutions
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "solutions/**/*.php"
+      - "runners/**/*.php"
+      - "tests/**/*.json"
+  pull_request:
+    paths:
+      - "solutions/**/*.php"
+      - "runners/**/*.php"
+      - "tests/**/*.json"
+  workflow_dispatch:
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      has_php_changes: ${{ steps.check-php.outputs.has_php_changes }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check for PHP changes
+        id: check-php
+        run: |
+          git fetch origin ${{ github.base_ref || 'main' }}
+          CHANGED_PHP=$(git diff --name-only origin/${{ github.base_ref || 'main' }}...HEAD | grep '\.php$' || true)
+          echo "Changed PHP files:"
+          echo "$CHANGED_PHP"
+          if [ -n "$CHANGED_PHP" ]; then
+            echo "has_php_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_php_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+  test-php-solutions:
+    name: Run PHP Test Runner
+    needs: detect-changes
+    if: needs.detect-changes.outputs.has_php_changes == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Run Tests for Changed PHP Files
+        run: |
+          git fetch origin ${{ github.base_ref || 'main' }}
+          CHANGED_PHP=$(git diff --name-only origin/${{ github.base_ref || 'main' }}...HEAD | grep '\.php$' || true)
+
+          if [ -z "$CHANGED_PHP" ]; then
+            echo "📭 No changed PHP files. Skipping tests."
+            exit 0
+          fi
+
+          for file in $CHANGED_PHP; do
+            if [[ "$file" == solutions/*/*.php ]]; then
+              sol="$file"
+
+              if [ ! -f "$sol" ]; then
+                echo "🗑️  Skipping deleted file $sol"
+                continue
+              fi
+
+              daydir=$(dirname "$sol")
+              day=$(basename "$daydir")
+              day_cleaned=$(echo "$day" | tr -d '-')
+              testfile="tests/$day_cleaned.json"
+
+              if [ -f "$testfile" ]; then
+                echo "🧪 Testing $sol with $testfile"
+                php runners/run_tests_php.php "$testfile" "$sol"
+              else
+                echo "⚠️ Skipping $sol: No matching test file at $testfile"
+              fi
+            fi
+          done
