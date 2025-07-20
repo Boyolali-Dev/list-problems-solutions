@@ -1,0 +1,26 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "Yogabayu",
+      "name": "Yoga Bayu AP",
+      "avatar_url": "https://avatars.githubusercontent.com/u/50708688?v=4",
+      "profile": "http://yogabayuap.com",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "list-problems-solutions",
+  "projectOwner": "Boyolali-Dev"
+}
