@@ -1,0 +1,92 @@
+[
+  {
+    "input": {
+      "strs": ["eat", "tea", "tan", "ate", "nat", "bat"]
+    },
+    "expected": [
+      ["eat", "tea", "ate"],
+      ["tan", "nat"],
+      ["bat"]
+    ]
+  },
+  {
+    "input": {
+      "strs": [""]
+    },
+    "expected": [
+      [""]
+    ]
+  },
+  {
+    "input": {
+      "strs": ["a"]
+    },
+    "expected": [
+      ["a"]
+    ]
+  },
+  {
+    "input": {
+      "strs": []
+    },
+    "expected": []
+  },
+  {
+    "input": {
+      "strs": ["abc", "cba", "bac", "cab", "acb", "bca"]
+    },
+    "expected": [
+      ["abc", "cba", "bac", "cab", "acb", "bca"]
+    ]
+  },
+  {
+    "input": {
+      "strs": ["silent", "listen", "enlist", "tinsel", "inlets"]
+    },
+    "expected": [
+      ["silent", "listen", "enlist", "tinsel", "inlets"]
+    ]
+  },
+  {
+    "input": {
+      "strs": ["hello", "world", "olleh", "dlrow"]
+    },
+    "expected": [
+      ["hello", "olleh"],
+      ["world", "dlrow"]
+    ]
+  },
+  {
+    "input": {
+      "strs": ["a", "b", "c", "d"]
+    },
+    "expected": [
+      ["a"],
+      ["b"],
+      ["c"],
+      ["d"]
+    ]
+  },
+  {
+    "input": {
+      "strs": ["aa", "bb", "cc", "dd"]
+    },
+    "expected": [
+      ["aa"],
+      ["bb"],
+      ["cc"],
+      ["dd"]
+    ]
+  },
+  {
+    "input": {
+      "strs": ["abc", "def", "ghi", "jkl"]
+    },
+    "expected": [
+      ["abc"],
+      ["def"],
+      ["ghi"],
+      ["jkl"]
+    ]
+  }
+] 

@@ -40,17 +40,35 @@ def main():
             if i == 0:
                 # Find the method that takes the input parameters
                 method_name = None
+                input_keys = list(case['input'].keys())
+                
+                # First, try to find the main method by common patterns
                 for attr_name in dir(solution):
                     if not attr_name.startswith('_'):
                         attr = getattr(solution, attr_name)
                         if callable(attr):
-                            # Check if it's the method we want (containsDuplicate for day01)
-                            if 'containsDuplicate' in attr_name or 'contains' in attr_name.lower():
+                            # Check for common main method patterns
+                            if any(pattern in attr_name.lower() for pattern in ['topkfrequent', 'groupanagrams', 'containsduplicate', 'validpalindrome', 'twosum']):
                                 method_name = attr_name
                                 break
                 
+                # If no main method found, try to find method by parameter names
                 if not method_name:
-                    # Try to find any method that matches the input structure
+                    for attr_name in dir(solution):
+                        if not attr_name.startswith('_'):
+                            attr = getattr(solution, attr_name)
+                            if callable(attr):
+                                # Check if method name matches any input key or common patterns
+                                if any(key in attr_name.lower() for key in input_keys):
+                                    method_name = attr_name
+                                    break
+                                # Check for common method patterns
+                                elif any(pattern in attr_name.lower() for pattern in ['group', 'anagram', 'duplicate', 'valid', 'palindrome']):
+                                    method_name = attr_name
+                                    break
+                
+                if not method_name:
+                    # Fallback: find any public method
                     for attr_name in dir(solution):
                         if not attr_name.startswith('_'):
                             attr = getattr(solution, attr_name)
