@@ -21,14 +21,24 @@ foreach ($tests as $idx => $test) {
 
   try {
     $solution = new Solution();
-    // For isAnagram, expects $s and $t as input
-    if (isset($input["s"]) && isset($input["t"])) {
+
+    // Detect which method to call based on input keys
+    if (isset($input["s"]) && isset($input["t"]) && method_exists($solution, "isAnagram")) {
       $result = $solution->isAnagram($input["s"], $input["t"]);
+    } elseif (isset($input["nums"]) && isset($input["target"]) && method_exists($solution, "twoSum")) {
+      $result = $solution->twoSum($input["nums"], $input["target"]);
     } else {
-      throw new Exception("Input must have 's' and 't' keys");
+      throw new Exception("Input keys do not match any known method signature.");
     }
 
-    if ($result === $expected) {
+    // For array results, compare as JSON for deep equality
+    if (is_array($expected)) {
+      $passed = json_encode($result) === json_encode($expected);
+    } else {
+      $passed = $result === $expected;
+    }
+
+    if ($passed) {
       echo "✅ Test " . ($idx + 1) . ": Passed\n";
       $pass_count++;
     } else {
