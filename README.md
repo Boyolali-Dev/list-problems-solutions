@@ -1,6 +1,6 @@
 # 📝 Kumpulan Soal Boyolali Dev
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Ini adalah repository berisi kumpulan soal harian yang dibagikan dalam komunitas Boyolali Dev. Setiap harinya, satu soal LeetCode dikirimkan untuk dikerjakan bersama. Di sini kamu bisa melihat dokumentasi soal per hari beserta link soal dan solusi dari para anggota.
@@ -52,6 +52,7 @@ Semangat terus ngoding bareng! 🚀
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="http://yogabayuap.com"><img src="https://avatars.githubusercontent.com/u/50708688?v=4?s=100" width="100px;" alt="Yoga Bayu AP"/><br /><sub><b>Yoga Bayu AP</b></sub></a><br /><a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=Yogabayu" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/irvanrifai"><img src="https://avatars.githubusercontent.com/u/48319593?v=4?s=100" width="100px;" alt="Irvan Rifa'i"/><br /><sub><b>Irvan Rifa'i</b></sub></a><br /><a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=irvanrifai" title="Code">💻</a> <a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=irvanrifai" title="Tests">⚠️</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/indraseptama"><img src="https://avatars.githubusercontent.com/u/36232396?v=4?s=100" width="100px;" alt="Indra Septama"/><br /><sub><b>Indra Septama</b></sub></a><br /><a href="https://github.com/Boyolali-Dev/list-problems-solutions/pulls?q=is%3Apr+reviewed-by%3Aindraseptama" title="Reviewed Pull Requests">👀</a> <a href="#ideas-indraseptama" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=indraseptama" title="Documentation">📖</a> <a href="#maintenance-indraseptama" title="Maintenance">🚧</a> <a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=indraseptama" title="Tests">⚠️</a> <a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=indraseptama" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
