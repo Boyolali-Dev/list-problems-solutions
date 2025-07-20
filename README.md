@@ -4,7 +4,7 @@ Ini adalah repository berisi kumpulan soal harian yang dibagikan dalam komunitas
 
 ## 📅 Rekap Harian
 
-Week 1
+Week 1 (Array & Hashing)
 | Day | Tanggal | Link Soal | Link Jawaban |
 | --- | ------------ | ------------------------------------------------- | ----------------------------- |
 | 1 | 14 Juli 2025 | [Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) | [Jawaban](./solutions/day-01) |
@@ -13,6 +13,7 @@ Week 1
 | 4 | 17 Juli 2025 | [Group Anagrams](https://leetcode.com/problems/group-anagrams/) | [Jawaban](./solutions/day-04) |
 | 5 | 18 Juli 2025 | [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | [Jawaban](./solutions/day-05) |
 | 6 | 19 Juli 2025 | [Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/) | [Jawaban](./solutions/day-06) |
+| 7 | 20 Juli 2025 | [Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | [Jawaban](./solutions/day-07) |
 
 > 📌 _Catatan: Tulisannya bisa disesuaikan jika ada variasi bahasa (JS, TS, Python, dll). Struktur folder disarankan `solutions/day-XX/namasoal.ext`._
 
