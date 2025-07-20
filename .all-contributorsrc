@@ -8,6 +8,20 @@
   "commitConvention": "angular",
   "contributors": [
     {
+      "login": "indraseptama",
+      "name": "Indra Septama",
+      "avatar_url": "https://avatars.githubusercontent.com/u/36232396?v=4",
+      "profile": "https://github.com/indraseptama",
+      "contributions": [
+        "review",
+        "ideas",
+        "doc",
+        "maintenance",
+        "test",
+        "code"
+      ]
+    },
+    {
       "login": "Yogabayu",
       "name": "Yoga Bayu AP",
       "avatar_url": "https://avatars.githubusercontent.com/u/50708688?v=4",
