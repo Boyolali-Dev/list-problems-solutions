@@ -1,0 +1,14 @@
+# .github/workflows/all-contributors.yml
+name: Update Contributors
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  update-contributors:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Update Contributors
+        run: npx all-contributors check
