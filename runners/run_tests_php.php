@@ -27,7 +27,9 @@ foreach ($tests as $idx => $test) {
       $result = $solution->isAnagram($input["s"], $input["t"]);
     } elseif (isset($input["nums"]) && isset($input["target"]) && method_exists($solution, "twoSum")) {
       $result = $solution->twoSum($input["nums"], $input["target"]);
-    } else {
+    } elseif (isset($input["strs"]) && method_exists($solution, "groupAnagrams")) {
+      $result = $solution->groupAnagrams($input["strs"]);
+    }else {
       throw new Exception("Input keys do not match any known method signature.");
     }
 
