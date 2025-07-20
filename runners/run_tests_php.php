@@ -29,7 +29,9 @@ foreach ($tests as $idx => $test) {
       $result = $solution->twoSum($input["nums"], $input["target"]);
     } elseif (isset($input["strs"]) && method_exists($solution, "groupAnagrams")) {
       $result = $solution->groupAnagrams($input["strs"]);
-    }else {
+    } elseif (isset($input["nums"]) && isset($input["k"]) && method_exists($solution, "topKFrequent")) {
+      $result = $solution->topKFrequent($input["nums"], $input["k"]);
+    } else {
       throw new Exception("Input keys do not match any known method signature.");
     }
 
