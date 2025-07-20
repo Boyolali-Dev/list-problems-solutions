@@ -1,4 +1,7 @@
 # 📝 Kumpulan Soal Boyolali Dev
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Ini adalah repository berisi kumpulan soal harian yang dibagikan dalam komunitas Boyolali Dev. Setiap harinya, satu soal LeetCode dikirimkan untuk dikerjakan bersama. Di sini kamu bisa melihat dokumentasi soal per hari beserta link soal dan solusi dari para anggota.
 
@@ -42,6 +45,20 @@ Semangat terus ngoding bareng! 🚀
 ## Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="http://yogabayuap.com"><img src="https://avatars.githubusercontent.com/u/50708688?v=4?s=100" width="100px;" alt="Yoga Bayu AP"/><br /><sub><b>Yoga Bayu AP</b></sub></a><br /><a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=Yogabayu" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 
