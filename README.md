@@ -51,7 +51,7 @@ Semangat terus ngoding bareng! 🚀
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="http://yogabayuap.com"><img src="https://avatars.githubusercontent.com/u/50708688?v=4?s=100" width="100px;" alt="Yoga Bayu AP"/><br /><sub><b>Yoga Bayu AP</b></sub></a><br /><a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=Yogabayu" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/irvanrifai"><img src="https://avatars.githubusercontent.com/u/48319593?v=4?s=100" width="100px;" alt="Irvan Rifa'i"/><br /><sub><b>Irvan Rifa'i</b></sub></a><br /><a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=irvanrifai" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/irvanrifai"><img src="https://avatars.githubusercontent.com/u/48319593?v=4?s=100" width="100px;" alt="Irvan Rifa'i"/><br /><sub><b>Irvan Rifa'i</b></sub></a><br /><a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=irvanrifai" title="Code">💻</a> <a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=irvanrifai" title="Tests">⚠️</a></td>
     </tr>
   </tbody>
 </table>
