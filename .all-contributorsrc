@@ -50,6 +50,15 @@
         "code",
         "review"
       ]
+    },
+    {
+      "login": "rasatria01",
+      "name": "Rafiq Satria Yudha",
+      "avatar_url": "https://avatars.githubusercontent.com/u/79002461?v=4",
+      "profile": "https://github.com/rasatria01",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
