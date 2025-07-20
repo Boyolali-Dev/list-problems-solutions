@@ -1,6 +1,6 @@
 # 📝 Kumpulan Soal Boyolali Dev
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Ini adalah repository berisi kumpulan soal harian yang dibagikan dalam komunitas Boyolali Dev. Setiap harinya, satu soal LeetCode dikirimkan untuk dikerjakan bersama. Di sini kamu bisa melihat dokumentasi soal per hari beserta link soal dan solusi dari para anggota.
@@ -55,6 +55,7 @@ Semangat terus ngoding bareng! 🚀
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/irvanrifai"><img src="https://avatars.githubusercontent.com/u/48319593?v=4?s=100" width="100px;" alt="Irvan Rifa'i"/><br /><sub><b>Irvan Rifa'i</b></sub></a><br /><a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=irvanrifai" title="Code">💻</a> <a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=irvanrifai" title="Tests">⚠️</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://www.linkedin.com/in/joko-triyanto"><img src="https://avatars.githubusercontent.com/u/25982672?v=4?s=100" width="100px;" alt="Joko Triyanto"/><br /><sub><b>Joko Triyanto</b></sub></a><br /><a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=jokot" title="Tests">⚠️</a> <a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=jokot" title="Code">💻</a> <a href="https://github.com/Boyolali-Dev/list-problems-solutions/pulls?q=is%3Apr+reviewed-by%3Ajokot" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/rasatria01"><img src="https://avatars.githubusercontent.com/u/79002461?v=4?s=100" width="100px;" alt="Rafiq Satria Yudha"/><br /><sub><b>Rafiq Satria Yudha</b></sub></a><br /><a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=rasatria01" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://yuu.codes"><img src="https://avatars.githubusercontent.com/u/52435800?v=4?s=100" width="100px;" alt="Bayu Prasetyo"/><br /><sub><b>Bayu Prasetyo</b></sub></a><br /><a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=BayuBP79" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
