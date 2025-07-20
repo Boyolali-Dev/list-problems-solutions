@@ -1,0 +1,95 @@
+name: Test Ruby Solutions
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "solutions/**/*.rb"
+      - "runners/**/*.rb"
+      - "tests/**/*.json"
+  pull_request:
+    paths:
+      - "solutions/**/*.rb"
+      - "runners/**/*.rb"
+      - "tests/**/*.json"
+  workflow_dispatch:
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      has_rb_changes: ${{ steps.check-rb.outputs.has_rb_changes }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check for Ruby changes
+        id: check-rb
+        run: |
+          git fetch origin ${{ github.base_ref || 'main' }}
+          CHANGED_RB=$(git diff --name-only origin/${{ github.base_ref || 'main' }}...HEAD | grep '\.rb$' || true)
+          echo "Changed RB files:"
+          echo "$CHANGED_RB"
+          if [ -n "$CHANGED_RB" ]; then
+            echo "has_rb_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_rb_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+  test-rb-solutions:
+    name: Run Ruby Test Runner
+    needs: detect-changes
+    if: needs.detect-changes.outputs.has_rb_changes == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+
+      - name: Install dependencies
+        run: |
+          bundle install || true
+
+      - name: Run Tests for Changed Ruby Files
+        run: |
+          git fetch origin ${{ github.base_ref || 'main' }}
+          CHANGED_RB=$(git diff --name-only origin/${{ github.base_ref || 'main' }}...HEAD | grep '\.rb$' || true)
+
+          if [ -z "$CHANGED_RB" ]; then
+            echo "📭 No changed Ruby files. Skipping tests."
+            exit 0
+          fi
+
+          for file in $CHANGED_RB; do
+            if [[ "$file" == solutions/*/*.rb ]]; then
+              sol="$file"
+
+              if [ ! -f "$sol" ]; then
+                echo "🗑️  Skipping deleted file $sol"
+                continue
+              fi
+
+              daydir=$(dirname "$sol")
+              day=$(basename "$daydir")
+              day_cleaned=$(echo "$day" | tr -d '-')
+              testfile="tests/$day_cleaned.json"
+
+              if [ -f "$testfile" ]; then
+                echo "🧪 Testing $sol with $testfile"
+                ruby runners/run_tests_rb.rb "$testfile" "$sol"
+              else
+                echo "⚠️ Skipping $sol: No matching test file at $testfile"
+              fi
+            fi
+          done

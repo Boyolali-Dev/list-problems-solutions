@@ -1,3 +1,7 @@
+def solve(input)
+  contains_duplicate(input["nums"])
+end
+
 # @param {Integer[]} nums
 # @return {Boolean}
 def contains_duplicate(nums)
