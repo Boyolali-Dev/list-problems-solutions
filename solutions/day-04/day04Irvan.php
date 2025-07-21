@@ -9,16 +9,30 @@ class Solution
    */
   function groupAnagrams($strs)
   {
-    $anagramMap = [];
+    $map = [];
 
-    foreach ($strs as $word) {
-      $sorted = str_split($word);
-      sort($sorted);
-      $key = implode('', $sorted); // use sorted word as key
+    foreach ($strs as $str) {
+      // Initialize frequency count for a-z
+      $count = array_fill(0, 26, 0);
 
-      $anagramMap[$key][] = $word;
+      // Count characters
+      for ($i = 0; $i < strlen($str); $i++) {
+        $index = ord($str[$i]) - ord('a');
+        if ($index >= 0 && $index < 26) {
+          $count[$index]++;
+        }
+      }
+
+      // Use joined count as key
+      $key = implode(',', $count);
+
+      // Group strings with the same character frequency
+      if (!isset($map[$key])) {
+        $map[$key] = [];
+      }
+      $map[$key][] = $str;
     }
 
-    return array_values($anagramMap);
+    return array_values($map);
   }
 }
