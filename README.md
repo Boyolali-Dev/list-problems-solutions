@@ -18,6 +18,12 @@ Week 1 (Array & Hashing)
 | 6 | 19 Juli 2025 | [Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/) | [Jawaban](./solutions/day-06) |
 | 7 | 20 Juli 2025 | [Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | [Jawaban](./solutions/day-07) |
 
+Week 2
+| Day | Tanggal | Link Soal | Tipe Soal | Tingkat Kesusahan | Link Jawaban |
+| --- | ------------ | ------------------------------------------------- | ------------------- | -------- | ----------------------------- | 
+| 8 | 21 Juli 2025 | [Longes Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence) | Array and Hashing | Medium |  [Jawaban](./solutions/day-08) |
+
+
 > 📌 _Catatan: Tulisannya bisa disesuaikan jika ada variasi bahasa (JS, TS, Python, dll). Struktur folder disarankan `solutions/day-XX/namasoal.ext`._
 
 ## 📂 Struktur Direktori
