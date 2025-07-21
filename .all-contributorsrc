@@ -1,0 +1,79 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "indraseptama",
+      "name": "Indra Septama",
+      "avatar_url": "https://avatars.githubusercontent.com/u/36232396?v=4",
+      "profile": "https://github.com/indraseptama",
+      "contributions": [
+        "review",
+        "ideas",
+        "doc",
+        "maintenance",
+        "test",
+        "code"
+      ]
+    },
+    {
+      "login": "Yogabayu",
+      "name": "Yoga Bayu AP",
+      "avatar_url": "https://avatars.githubusercontent.com/u/50708688?v=4",
+      "profile": "http://yogabayuap.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "irvanrifai",
+      "name": "Irvan Rifa'i",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48319593?v=4",
+      "profile": "https://github.com/irvanrifai",
+      "contributions": [
+        "code",
+        "test"
+      ]
+    },
+    {
+      "login": "jokot",
+      "name": "Joko Triyanto",
+      "avatar_url": "https://avatars.githubusercontent.com/u/25982672?v=4",
+      "profile": "http://www.linkedin.com/in/joko-triyanto",
+      "contributions": [
+        "test",
+        "code",
+        "review"
+      ]
+    },
+    {
+      "login": "rasatria01",
+      "name": "Rafiq Satria Yudha",
+      "avatar_url": "https://avatars.githubusercontent.com/u/79002461?v=4",
+      "profile": "https://github.com/rasatria01",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "BayuBP79",
+      "name": "Bayu Prasetyo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/52435800?v=4",
+      "profile": "http://yuu.codes",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "list-problems-solutions",
+  "projectOwner": "Boyolali-Dev"
+}
