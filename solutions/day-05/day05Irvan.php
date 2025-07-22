@@ -9,20 +9,28 @@ class Solution
    */
   function topKFrequent($nums, $k)
   {
+    // loop nums to define frequency each number
     $frequencyMap = [];
-
-    // Count frequency of each number
     foreach ($nums as $num) {
-      if (!isset($frequencyMap[$num])) {
-        $frequencyMap[$num] = 0;
-      }
-      $frequencyMap[$num]++;
+      $frequencyMap[$num] = ($frequencyMap[$num] ?? 0) + 1;
     }
 
-    // Sort the frequency map by frequency descending
-    arsort($frequencyMap);
+    // Bucket sort: frequency => list of numbers (group by frequency)
+    $bucket = [];
+    foreach ($frequencyMap as $num => $freq) {
+      $bucket[$freq][] = $num;
+    }
 
-    // Get the top k frequent elements
-    return array_slice(array_keys($frequencyMap), 0, $k);
+    $result = [];
+    // Traverse buckets from high to low frequency
+    for ($i = count($nums); $i > 0 && count($result) < $k; $i--) {
+      if (!empty($bucket[$i])) {
+        foreach ($bucket[$i] as $num) {
+          $result[] = $num;
+          if (count($result) === $k) break;
+        }
+      }
+    }
+    return $result;
   }
 }
