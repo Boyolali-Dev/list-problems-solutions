@@ -7,7 +7,7 @@
          * @param Integer $target
          * @return Integer[]
          */
-        function twoSum($numbers, $target): array|null {
+        function twoSum2($numbers, $target): array|null {
             $checked = [];
 
             for($i = 1; $i <= count($numbers); $i++){
