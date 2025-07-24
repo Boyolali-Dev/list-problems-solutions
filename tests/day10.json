@@ -16,7 +16,7 @@
       "expected": [4, 5]
     },
     {
-      "input": { "numbers": [-10, -5, 0, 5, 10], "target": 0 },
+      "input": { "numbers": [-10, -5, 0, 5, 9], "target": 0 },
       "expected": [2, 4]
     },
     {
