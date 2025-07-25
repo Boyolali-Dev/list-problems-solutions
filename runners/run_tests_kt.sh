@@ -24,7 +24,7 @@ cp "$TEST_FILE" "$TEMP_DIR/test.json"
 
 cd "$TEMP_DIR"
 
-# Create a universal test runner with simpler JSON parsing
+# Create a universal test runner
 cat > TestRunner.kt << 'EOF'
 import java.io.File
 import kotlin.reflect.full.primaryConstructor
@@ -32,43 +32,37 @@ import kotlin.reflect.full.memberFunctions
 import kotlin.reflect.KParameter
 
 fun main(args: Array<String>) {
-    val testFile = args[0]
-    val testCases = parseJsonFile(testFile)
+    val testCases = parseJsonFile(args[0])
     val solutionClass = Class.forName("Solution").kotlin
     val solution = solutionClass.primaryConstructor?.call() ?: solutionClass.objectInstance
 
-    // Dynamically detect the method to call
     val method = findTestMethod(solutionClass, testCases.firstOrNull())
         ?: throw Exception("No suitable method found in Solution class")
 
-    var passedTests = 0
-    val totalTests = testCases.size
-    
-    for ((i, testCase) in testCases.withIndex()) {
+    testCases.forEachIndexed { i, testCase ->
         val input = testCase["input"] as? Map<String, Any?> 
-            ?: throw Exception("Invalid test case format: missing or invalid input")
+            ?: throw Exception("Invalid test case format: missing input")
         val expected = testCase["expected"]
         
         try {
-            val methodArgs = prepareMethodArguments(method, input)
+            val methodArgs = method.parameters.filter { it.kind == KParameter.Kind.VALUE }.map { param ->
+                convertValue(input[param.name], param.type.toString())
+            }
             val actual = method.call(solution, *methodArgs.toTypedArray())
             
-            if (compareResults(actual, expected)) {
-                passedTests++
-            } else {
-                println("❌ Test case "+(i+1)+" failed")
+            if (!compareResults(actual, expected)) {
+                println("❌ Test case ${i+1} failed")
                 println("   Input: $input")
                 println("   Expected: $expected, Got: $actual")
                 System.exit(1)
             }
         } catch (e: Exception) {
-            println("❌ Test case "+(i+1)+" failed with error: ${e.message}")
+            println("❌ Test case ${i+1} failed: ${e.message}")
             println("   Input: $input")
-            println("   Expected: $expected")
             System.exit(1)
         }
     }
-    println("✅ Passed $passedTests/$totalTests test cases")
+    println("✅ Passed ${testCases.size} test cases")
 }
 
 fun findTestMethod(solutionClass: kotlin.reflect.KClass<*>, firstTestCase: Map<String, Any?>?): kotlin.reflect.KFunction<*>? {
@@ -82,65 +76,47 @@ fun findTestMethod(solutionClass: kotlin.reflect.KClass<*>, firstTestCase: Map<S
         }
     }
     
-    // Fallback: find by parameter count
+    // Fallback: find by parameter count only
     return solutionClass.memberFunctions.firstOrNull { fn ->
-        fn.parameters.count { it.kind == KParameter.Kind.VALUE } == inputKeys.size
+        val params = fn.parameters.filter { it.kind == KParameter.Kind.VALUE }
+        params.size == inputKeys.size
     }
 }
 
-fun prepareMethodArguments(method: kotlin.reflect.KFunction<*>, input: Map<String, Any?>): List<Any?> {
-    return method.parameters.filter { it.kind == KParameter.Kind.VALUE }.map { param ->
-        val value = input[param.name]
-        convertValue(value, param.type.toString())
+fun convertValue(value: Any?, targetType: String): Any? = when {
+    value is List<*> && (targetType.contains("Array<CharArray>") || targetType.contains("Array<kotlin.CharArray>")) -> {
+        @Suppress("UNCHECKED_CAST")
+        (value as List<List<String>>).map { row -> row.map { it[0] }.toCharArray() }.toTypedArray()
     }
+    value is List<*> && (targetType.contains("Array<String>") || targetType.contains("Array<kotlin.String>")) -> {
+        @Suppress("UNCHECKED_CAST")
+        (value as List<String>).toTypedArray()
+    }
+    value is List<*> && targetType.contains("IntArray") -> {
+        value.filterIsInstance<Number>().map { it.toInt() }.toIntArray()
+    }
+    value is List<*> && value.isNotEmpty() && value[0] is List<*> && targetType.contains("Array") -> {
+        @Suppress("UNCHECKED_CAST")
+        (value as List<List<Any?>>).map { it.toTypedArray() }.toTypedArray()
+    }
+    value is List<*> && targetType.contains("Array") -> value.toTypedArray()
+    value is Number && targetType.contains("Int") -> value.toInt()
+    value is Number && targetType.contains("Long") -> value.toLong()
+    value is Number && targetType.contains("Double") -> value.toDouble()
+    else -> value
 }
 
-fun convertValue(value: Any?, targetType: String): Any? {
-    return when {
-        value is List<*> && targetType.contains("IntArray") -> {
-            val numberList = value.filterIsInstance<Number>()
-            numberList.map { it.toInt() }.toIntArray()
-        }
-        value is List<*> && targetType.contains("Array") && value.all { it is String } -> {
-            @Suppress("UNCHECKED_CAST")
-            (value as List<String>).toTypedArray()
-        }
-        value is List<*> && targetType.contains("Array") -> {
-            value.toTypedArray()
-        }
-        value is Number && targetType.contains("Int") -> {
-            value.toInt()
-        }
-        value is Number && targetType.contains("Long") -> {
-            value.toLong()
-        }
-        value is Number && targetType.contains("Double") -> {
-            value.toDouble()
-        }
-        else -> value
+fun compareResults(actual: Any?, expected: Any?): Boolean = when {
+    actual is IntArray && expected is List<*> -> {
+        actual.contentEquals(expected.filterIsInstance<Number>().map { it.toInt() }.toIntArray())
     }
+    actual is Array<*> && expected is List<*> -> actual.contentEquals(expected.toTypedArray())
+    else -> actual == expected
 }
 
-fun compareResults(actual: Any?, expected: Any?): Boolean {
-    return when {
-        actual is IntArray && expected is List<*> -> {
-            val expectedNumbers = expected.filterIsInstance<Number>()
-            actual.contentEquals(expectedNumbers.map { it.toInt() }.toIntArray())
-        }
-        actual is Array<*> && expected is List<*> -> {
-            actual.contentEquals(expected.toTypedArray())
-        }
-        else -> actual == expected
-    }
-}
-
-fun parseJsonFile(filename: String): List<Map<String, Any?>> {
-    val content = File(filename).readText()
-    return parseJson(content)
-}
+fun parseJsonFile(filename: String) = parseJson(File(filename).readText())
 
 fun parseJson(json: String): List<Map<String, Any?>> {
-    // Simple JSON parser for basic structures
     val trimmed = json.trim()
     if (!trimmed.startsWith("[") || !trimmed.endsWith("]")) {
         throw Exception("Expected JSON array")
@@ -155,8 +131,7 @@ fun parseJson(json: String): List<Map<String, Any?>> {
     var start = -1
     
     while (i < content.length) {
-        val char = content[i]
-        when (char) {
+        when (content[i]) {
             '{' -> {
                 if (depth == 0) start = i
                 depth++
@@ -164,15 +139,13 @@ fun parseJson(json: String): List<Map<String, Any?>> {
             '}' -> {
                 depth--
                 if (depth == 0 && start != -1) {
-                    val objStr = content.substring(start, i + 1)
-                    result.add(parseObject(objStr))
+                    result.add(parseObject(content.substring(start, i + 1)))
                     start = -1
                 }
             }
         }
         i++
     }
-    
     return result
 }
 
@@ -186,7 +159,7 @@ fun parseObject(objStr: String): Map<String, Any?> {
         while (i < content.length && content[i].isWhitespace()) i++
         if (i >= content.length) break
         
-        // Find key
+        // Parse key
         if (content[i] != '"') break
         i++
         val keyStart = i
@@ -200,74 +173,74 @@ fun parseObject(objStr: String): Map<String, Any?> {
         if (i >= content.length) break
         
         // Parse value
-        val value: Any? = when (content[i]) {
-            '"' -> {
-                i++
-                val valueStart = i
-                while (i < content.length && content[i] != '"') i++
-                if (i >= content.length) break
-                val str = content.substring(valueStart, i)
-                i++
-                str
-            }
-            '[' -> {
-                val arrayStart = i
-                var depth = 0
-                do {
-                    when (content[i]) {
-                        '[' -> depth++
-                        ']' -> depth--
-                    }
-                    i++
-                } while (depth > 0 && i < content.length)
-                parseArray(content.substring(arrayStart, i))
-            }
-            '{' -> {
-                val objStart = i
-                var depth = 0
-                do {
-                    when (content[i]) {
-                        '{' -> depth++
-                        '}' -> depth--
-                    }
-                    i++
-                } while (depth > 0 && i < content.length)
-                parseObject(content.substring(objStart, i))
-            }
-            't' -> {
-                if (content.substring(i).startsWith("true")) {
-                    i += 4
-                    true
-                } else break
-            }
-            'f' -> {
-                if (content.substring(i).startsWith("false")) {
-                    i += 5
-                    false
-                } else break
-            }
-            'n' -> {
-                if (content.substring(i).startsWith("null")) {
-                    i += 4
-                    null
-                } else break
-            }
-            else -> {
-                // Number
-                val numStart = i
-                while (i < content.length && (content[i].isDigit() || content[i] == '-' || content[i] == '.')) i++
-                val numStr = content.substring(numStart, i)
-                if (numStr.contains(".")) numStr.toDouble() else numStr.toInt()
-            }
-        }
-        
-        result[key] = value
+        val value = parseValue(content, i)
+        i = value.second
+        result[key] = value.first
         
         // Skip comma and whitespace
         while (i < content.length && (content[i].isWhitespace() || content[i] == ',')) i++
     }
-    
     return result
+}
+
+fun parseValue(content: String, startIndex: Int): Pair<Any?, Int> {
+    var i = startIndex
+    return when (content[i]) {
+        '"' -> {
+            i++
+            val valueStart = i
+            while (i < content.length && content[i] != '"') i++
+            val str = content.substring(valueStart, i)
+            i++
+            str to i
+        }
+        '[' -> {
+            val arrayStart = i
+            var depth = 0
+            do {
+                when (content[i]) {
+                    '[' -> depth++
+                    ']' -> depth--
+                }
+                i++
+            } while (depth > 0 && i < content.length)
+            parseArray(content.substring(arrayStart, i)) to i
+        }
+        '{' -> {
+            val objStart = i
+            var depth = 0
+            do {
+                when (content[i]) {
+                    '{' -> depth++
+                    '}' -> depth--
+                }
+                i++
+            } while (depth > 0 && i < content.length)
+            parseObject(content.substring(objStart, i)) to i
+        }
+        't' -> {
+            if (content.substring(i).startsWith("true")) {
+                true to (i + 4)
+            } else throw Exception("Invalid token")
+        }
+        'f' -> {
+            if (content.substring(i).startsWith("false")) {
+                false to (i + 5)
+            } else throw Exception("Invalid token")
+        }
+        'n' -> {
+            if (content.substring(i).startsWith("null")) {
+                null to (i + 4)
+            } else throw Exception("Invalid token")
+        }
+        else -> {
+            val numStart = i
+            while (i < content.length && (content[i].isDigit() || content[i] == '-' || content[i] == '.')) i++
+            val numStr = content.substring(numStart, i)
+            val num = if (numStr.contains(".")) numStr.toDouble() else numStr.toInt()
+            num to i
+        }
+    }
 }
 
 fun parseArray(arrayStr: String): List<Any?> {
@@ -278,78 +251,15 @@ fun parseArray(arrayStr: String): List<Any?> {
     
     var i = 0
     while (i < content.length) {
-        // Skip whitespace
         while (i < content.length && content[i].isWhitespace()) i++
         if (i >= content.length) break
         
-        // Parse value
-        val value: Any? = when (content[i]) {
-            '"' -> {
-                i++
-                val valueStart = i
-                while (i < content.length && content[i] != '"') i++
-                if (i >= content.length) break
-                val str = content.substring(valueStart, i)
-                i++
-                str
-            }
-            '[' -> {
-                val arrayStart = i
-                var depth = 0
-                do {
-                    when (content[i]) {
-                        '[' -> depth++
-                        ']' -> depth--
-                    }
-                    i++
-                } while (depth > 0 && i < content.length)
-                parseArray(content.substring(arrayStart, i))
-            }
-            '{' -> {
-                val objStart = i
-                var depth = 0
-                do {
-                    when (content[i]) {
-                        '{' -> depth++
-                        '}' -> depth--
-                    }
-                    i++
-                } while (depth > 0 && i < content.length)
-                parseObject(content.substring(objStart, i))
-            }
-            't' -> {
-                if (content.substring(i).startsWith("true")) {
-                    i += 4
-                    true
-                } else break
-            }
-            'f' -> {
-                if (content.substring(i).startsWith("false")) {
-                    i += 5
-                    false
-                } else break
-            }
-            'n' -> {
-                if (content.substring(i).startsWith("null")) {
-                    i += 4
-                    null
-                } else break
-            }
-            else -> {
-                // Number
-                val numStart = i
-                while (i < content.length && (content[i].isDigit() || content[i] == '-' || content[i] == '.')) i++
-                val numStr = content.substring(numStart, i)
-                if (numStr.contains(".")) numStr.toDouble() else numStr.toInt()
-            }
-        }
+        val value = parseValue(content, i)
+        result.add(value.first)
+        i = value.second
         
-        result.add(value)
-        
-        // Skip comma and whitespace
         while (i < content.length && (content[i].isWhitespace() || content[i] == ',')) i++
     }
-    
     return result
 }
 EOF

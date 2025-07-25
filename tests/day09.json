@@ -1,0 +1,43 @@
+[
+    {
+      "input": { "s": "A man, a plan, a canal: Panama" },
+      "expected": true
+    },
+    {
+      "input": { "s": "race a car" },
+      "expected": false
+    },
+    {
+      "input": { "s": " " },
+      "expected": true
+    },
+    {
+      "input": { "s": "0P" },
+      "expected": false
+    },
+    {
+      "input": { "s": "Madam" },
+      "expected": true
+    },
+    {
+      "input": { "s": "No 'x' in Nixon" },
+      "expected": true
+    },
+    {
+      "input": { "s": "Was it a car or a cat I saw?" },
+      "expected": true
+    },
+    {
+      "input": { "s": "12321" },
+      "expected": true
+    },
+    {
+      "input": { "s": "123abccba321" },
+      "expected": true
+    },
+    {
+      "input": { "s": "Able was I, ere I saw Elba!" },
+      "expected": true
+    }
+  ]
+  
