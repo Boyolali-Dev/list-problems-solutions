@@ -29,6 +29,7 @@ Week 2
 | 10 | 23 Juli 2025 | [Two Sum II - Input Array Is Sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | Two Pointer | Medium | [Jawaban](./solutions/day-10) |
 | 11 | 24 Juli 2025 | [3Sum](https://leetcode.com/problems/3sum/) | Two Pointer | Medium | [Jawaban](./solutions/day-11) |
 | 12 | 25 Juli 2025 | [Container With Most Water](https://leetcode.com/problems/container-with-most-water/) | Two Pointer | Medium | [Jawaban](./solutions/day-12) |
+| 13 | 26 Juli 2025 | [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/) | Two Pointer | Hard | [Jawaban](./solutions/day-13) |
 
 > 📌 _Catatan: Tulisannya bisa disesuaikan jika ada variasi bahasa (JS, TS, Python, dll). Struktur folder disarankan `solutions/day-XX/namasoal.ext`._
 
