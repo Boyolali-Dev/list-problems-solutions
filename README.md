@@ -30,6 +30,7 @@ Week 2
 | 11 | 24 Juli 2025 | [3Sum](https://leetcode.com/problems/3sum/) | Two Pointer | Medium | [Jawaban](./solutions/day-11) |
 | 12 | 25 Juli 2025 | [Container With Most Water](https://leetcode.com/problems/container-with-most-water/) | Two Pointer | Medium | [Jawaban](./solutions/day-12) |
 | 13 | 26 Juli 2025 | [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/) | Two Pointer | Hard | [Jawaban](./solutions/day-13) |
+| 14 | 27 Juli 2025 | [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | Stack | Easy | [Jawaban](./solutions/day-14)
 
 > 📌 _Catatan: Tulisannya bisa disesuaikan jika ada variasi bahasa (JS, TS, Python, dll). Struktur folder disarankan `solutions/day-XX/namasoal.ext`._
 
