@@ -30,7 +30,23 @@ Week 2
 | 11 | 24 Juli 2025 | [3Sum](https://leetcode.com/problems/3sum/) | Two Pointer | Medium | [Jawaban](./solutions/day-11) |
 | 12 | 25 Juli 2025 | [Container With Most Water](https://leetcode.com/problems/container-with-most-water/) | Two Pointer | Medium | [Jawaban](./solutions/day-12) |
 | 13 | 26 Juli 2025 | [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/) | Two Pointer | Hard | [Jawaban](./solutions/day-13) |
-| 14 | 27 Juli 2025 | [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | Stack | Easy | [Jawaban](./solutions/day-14)
+| 14 | 27 Juli 2025 | [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | Stack | Easy | [Jawaban](./solutions/day-14) |
+
+Week 3
+| Day | Tanggal | Link Soal | Tipe Soal | Tingkat Kesusahan | Link Jawaban |
+| --- | ------------ | ------------------------------------------------- | ------------------- | -------- | ----------------------------- |
+| 15 | 28 Juli 2025 | [Min Stack](https://leetcode.com/problems/min-stack/) | Stack | Medium | [Jawaban](./solutions/day-15) |
+| 16 | 29 Juli 2025 | [Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | Stack | Medium | [Jawaban](./solutions/day-16) |
+| 17 | 30 Juli 2025 | [Generate Parentheses](https://leetcode.com/problems/generate-parentheses/) | Stack | Medium | [Jawaban](./solutions/day-17) |
+| 18 | 31 Juli 2025 | [Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) | Stack | Medium | [Jawaban](./solutions/day-18) |
+| 19 | 1 Agustus 2025 | [Car Fleet](https://leetcode.com/problems/car-fleet/) | Stack | Medium | [Jawaban](./solutions/day-19) |
+| 20 | 2 Agustus 2025 | [Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | Stack | Hard | [Jawaban](./solutions/day-20) |
+| 21 | 3 Agustus 2025 | [Binary Search](https://leetcode.com/problems/binary-search/) | Binary Search | Easy | [Jawaban](./solutions/day-21) |
+
+Week 4
+| Day | Tanggal | Link Soal | Tipe Soal | Tingkat Kesusahan | Link Jawaban |
+| --- | ------------ | ------------------------------------------------- | ------------------- | -------- | ----------------------------- |
+| 22 | 4 Agustus 2025 | [Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/) | Binary Search | Medium | [Jawaban](./solutions/day-22) |
 
 > 📌 _Catatan: Tulisannya bisa disesuaikan jika ada variasi bahasa (JS, TS, Python, dll). Struktur folder disarankan `solutions/day-XX/namasoal.ext`._
 
