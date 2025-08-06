@@ -1,9 +1,7 @@
 # 📝 Kumpulan Soal Boyolali Dev
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors)
-
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Ini adalah repository berisi kumpulan soal harian yang dibagikan dalam komunitas Boyolali Dev. Setiap harinya, satu soal LeetCode dikirimkan untuk dikerjakan bersama. Di sini kamu bisa melihat dokumentasi soal per hari beserta link soal dan solusi dari para anggota.
@@ -30,7 +28,23 @@ Week 2
 | 11 | 24 Juli 2025 | [3Sum](https://leetcode.com/problems/3sum/) | Two Pointer | Medium | [Jawaban](./solutions/day-11) |
 | 12 | 25 Juli 2025 | [Container With Most Water](https://leetcode.com/problems/container-with-most-water/) | Two Pointer | Medium | [Jawaban](./solutions/day-12) |
 | 13 | 26 Juli 2025 | [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/) | Two Pointer | Hard | [Jawaban](./solutions/day-13) |
-| 14 | 27 Juli 2025 | [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | Stack | Easy | [Jawaban](./solutions/day-14)
+| 14 | 27 Juli 2025 | [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | Stack | Easy | [Jawaban](./solutions/day-14) |
+
+Week 3
+| Day | Tanggal | Link Soal | Tipe Soal | Tingkat Kesusahan | Link Jawaban |
+| --- | ------------ | ------------------------------------------------- | ------------------- | -------- | ----------------------------- |
+| 15 | 28 Juli 2025 | [Min Stack](https://leetcode.com/problems/min-stack/) | Stack | Medium | [Jawaban](./solutions/day-15) |
+| 16 | 29 Juli 2025 | [Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | Stack | Medium | [Jawaban](./solutions/day-16) |
+| 17 | 30 Juli 2025 | [Generate Parentheses](https://leetcode.com/problems/generate-parentheses/) | Stack | Medium | [Jawaban](./solutions/day-17) |
+| 18 | 31 Juli 2025 | [Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) | Stack | Medium | [Jawaban](./solutions/day-18) |
+| 19 | 1 Agustus 2025 | [Car Fleet](https://leetcode.com/problems/car-fleet/) | Stack | Medium | [Jawaban](./solutions/day-19) |
+| 20 | 2 Agustus 2025 | [Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | Stack | Hard | [Jawaban](./solutions/day-20) |
+| 21 | 3 Agustus 2025 | [Binary Search](https://leetcode.com/problems/binary-search/) | Binary Search | Easy | [Jawaban](./solutions/day-21) |
+
+Week 4
+| Day | Tanggal | Link Soal | Tipe Soal | Tingkat Kesusahan | Link Jawaban |
+| --- | ------------ | ------------------------------------------------- | ------------------- | -------- | ----------------------------- |
+| 22 | 4 Agustus 2025 | [Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/) | Binary Search | Medium | [Jawaban](./solutions/day-22) |
 
 > 📌 _Catatan: Tulisannya bisa disesuaikan jika ada variasi bahasa (JS, TS, Python, dll). Struktur folder disarankan `solutions/day-XX/namasoal.ext`._
 
@@ -70,6 +84,7 @@ Semangat terus ngoding bareng! 🚀
       <td align="center" valign="top" width="14.28%"><a href="http://www.linkedin.com/in/joko-triyanto"><img src="https://avatars.githubusercontent.com/u/25982672?v=4?s=100" width="100px;" alt="Joko Triyanto"/><br /><sub><b>Joko Triyanto</b></sub></a><br /><a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=jokot" title="Tests">⚠️</a> <a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=jokot" title="Code">💻</a> <a href="https://github.com/Boyolali-Dev/list-problems-solutions/pulls?q=is%3Apr+reviewed-by%3Ajokot" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/rasatria01"><img src="https://avatars.githubusercontent.com/u/79002461?v=4?s=100" width="100px;" alt="Rafiq Satria Yudha"/><br /><sub><b>Rafiq Satria Yudha</b></sub></a><br /><a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=rasatria01" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://yuu.codes"><img src="https://avatars.githubusercontent.com/u/52435800?v=4?s=100" width="100px;" alt="Bayu Prasetyo"/><br /><sub><b>Bayu Prasetyo</b></sub></a><br /><a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=BayuBP79" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://masdzub.com"><img src="https://avatars.githubusercontent.com/u/38211570?v=4?s=100" width="100px;" alt="Dzubayyan Ahmad"/><br /><sub><b>Dzubayyan Ahmad</b></sub></a><br /><a href="https://github.com/Boyolali-Dev/list-problems-solutions/commits?author=masdzub" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
